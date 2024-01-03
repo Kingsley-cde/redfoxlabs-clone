@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Red Fox Labs</title>
+  </head>
+  <body>
+    <section>
+      <header>
+        <a href="index.html"> <img src="assets/logo.png" alt="logo image" /></a>
+        <nav>
+          <a href="About.html">About the company</a>
+          <a href="services.html">Services</a>
+          <a href="contact.html">Contact</a>
+          <a href="blog.html">Blog</a>
+          <a href="learnmore.html">Learn more</a>
+        </nav>
+      </header>
+
+      <div>
+        <h1>RED FOX LABS BLOG</h1>
+      </div>
+    </section>
+
+    <section>
+      <img src="assets/blog 2.jpeg" alt="image2" />
+      <p>Why are Linux Security modules so crucial?</p>
+      <p>Linux</p>
+      <p>Cyber Security</p>
+      <p>LSM</p>
+      <p>Linux capabilities</p>
+      <p>April 6, 2022</p>
+      <p>
+        If you have a Linux distribution and you are operating a server on it,
+        you will undoubtedly want to provide the highest level of security
+        available to ensure that it runs smoothly and maintains its integrity.
+        However, as we all know, there is no such thing as flawless security;
+        developers will continue to make errors, and hackers will always find
+        new and devious ways to exploit your server and obtain access. Once
+        gaining access there will be another security layer by default made by
+        unix systems based on discretionary access control
+        <a href="https://en.wikipedia.org/wiki/Discretionary_access_control"
+          >(DAC)</a
+        >
+        which has proven not be reliable and inadequate to provide strong system
+        security, if attackers manage to get access as privileged user or made
+        their way to one through privilege escalation, they will be free to do
+        whatever they want on the server, thus having another layer of security
+        is mandatory and it’s the problem that <b>LSMs</b> were made to solve.
+      </p>
+      <br />
+      <p>What is an LSM?</p>
+      <br />
+      <p>
+        <b>LSMs</b> or Linux Security Modules are just a framework that offer
+        security checks. They are compiled directly into the kernel. Unlike the
+        default permissions system of the Unix, <b>LSMs</b> work based on a
+        Mandatory access control (<b>MAC</b>>) which describes to the users the
+        actions that they can do instead of what they can't and there will be an
+        admin responsible for this security policy. <b>LSMs</b> work by adding
+        hook extensions to the kernel that get triggered with the access to
+        important kernel objects like inodes, task structures, credentials, and
+        interprocess communication objects. There were several attempts for the
+        best way to implement <b>MAC</b> into the kernel and the first one was
+        <b>SELinux</b> presented by the <b>NSA</b> in 2001 but nothing was
+        decided yet and Linus Torvalds asked the community to make it a module.
+        Few years later <b>SELinux</b> became a widely used <b>LSM</b> but the
+        community kept working on other modules which led to the appearance of
+        <b>AppArmor, Tomoyo …</b>
+      </p>
+      <br />
+      <p>Design of LSM</p>
+      <br />
+      <p>
+        To have a better understanding on how <b>LSMs</b> work, we should take a
+        deep dive into their architecture and design. The goal of <b>LSM</b> was
+        trying to find the most efficient way to add a mandatory access control
+        module while imposing the fewest possible changes to the kernel and it
+        has been done through the use of hooks. When a user performs an action
+        that requires access to the kernel’s internal objects thus provoking
+        system calls, it first passes through the kernel logic and errors checks
+        then the <b>UNIX</b> discretionary access controls, after this the
+        kernel will give or deny access but with a linux security module being
+        present, this flow will has to first pass by another layer just before
+        providing the access to the internal object, an <b>LSM </b>hook makes a
+        call to the module asking Is this access ok ? and after the module goes
+        through its policy it returns <b>‘Yes’</b> or <b>‘No’</b> hence granting
+        access or denying the access. The following graph represents the
+        <b>LSM Hook Architecture</b>.
+      </p>
+      <br />
+      <p>
+        As shown in the Figure above , the <b>LSM</b> design is fairly simple
+        and answers the security requirements but due to this simplicity,
+        <b>LSM</b> hooks are primarily restrictive i.e if the kernel was about
+        to grant access to an object the <b>LSM</b> may deny that access if it
+        contradicts the policy, however if that process didn’t pass the checks
+        before the hook, the <b>LSM</b> is not even consulted. In order to
+        support this logic, <b>LSM</b> provides some actions through permissive
+        hooks that can grant access the kernel was about to deny. It is done
+        after doing a simple <b>DAC </b>check then a <b>DAC</b> override with
+        the permissive <b>LSM</b> hook just like it’s presented in the figure
+        below :
+      </p>
+      <br />
+      <p>
+        In case the user's request for access was rejected by the kernel it can
+        be overridden by the permissive hook. These hooks are limited to the
+        extent that the kernel already consults the
+        <b>POSIX capable </b>function.
+      </p>
+      <br />
+      <p>LSM Examples</p>
+      <br />
+      <p>
+        There are multiple LSMs and each one is characterized by its advantages
+        and inconveniences, and we’re going to present some of them, highlight
+        their qualities and compare them. It’s worth pointing out that only a
+        single LSM can be used at a time as it assumes it has exclusive access
+        to the security context pointers and security identifiers embedded in
+        protected kernel objects.
+      </p>
+      <br />
+      <ul>
+        <li><b>SELinux</b> (Security-Enhanced Linux)</li>
+      </ul>
+      <br />
+      <p>
+        We have to start with the most sophisticated Linux
+        <a href="https://en.wikipedia.org/wiki/Mandatory_access_control"
+          >Mandatory Access Control</a
+        >
+        (MAC) System, which is SELinux. SELinux was initially released as a
+        collaboration between Red Hat and the National Security Agency; it is
+        supported today by many Linux distributions. Its ultimate goal is to
+        monitor running processes, by ensuring that they respect a number of
+        predefined rules, and also by tagging all of files, directories,
+        sockets, and processes with an appropriate SELinux security context to
+        follow.
+      </p>
+      <br />
+      <p>
+        <b>SELinux </b>only grants access if the administrator writes a specific
+        policy to do so, which is called the least-privilege model, it comes
+        with three different modes:
+      </p>
+      <br />
+      <p>
+        <b>Strict mode</b>: restriction of access according to the SELinux
+        rules.
+      </p>
+      <br />
+      <p>
+        <b>Permissive mode</b>: access will not be blocked but errors as
+        recorded to the logs, it can be thought of as debugging mode.
+      </p>
+      <br />
+      <p><b>Disabled mode</b>: as its name refers to, it does nothing.</p>
+      <br />
+      <p>
+        This security module is known for its complex structure and the
+        capability to establish any possible rule or policy, which offers higher
+        levels of security. However, it is not so intelligible to all people,
+        many of them find it difficult to set up, to manage and to troubleshoot,
+        and these are the main reasons for them to abandon it and opt for other
+        LSMs, which we will be discussing some next.
+      </p>
+      <br />
+      <ul>
+        <li>
+          <b>AppArmor</b>
+        </li>
+      </ul>
+      <br />
+      <p>
+        AppArmor is a linux kernel security module, offered as an alternative to
+        SELinux, it is available on SUSE Linux Enterprise Server,
+        <b>openSUSE</b> and other platforms. Same as SELinux,
+        <b>AppArmor</b> supports the Type Enforcement security model, which is a
+        type of mandatory access control, based on rules where subjects
+        (processes or users) are allowed to access objects (files, directories,
+        sockets, etc.). Unlike SELinux, which is based on applying labels to
+        files, AppArmor uses configuration files and pathnames to grant,
+        restrict and deny access, and we call them security profiles, which are
+        equivalent to SELinux security policies and look more user-friendly.
+      </p>
+      <br />
+      <p>
+        In addition to that, AppArmor is filesystem-agnostic which means that it
+        supports any filesystem, while SELinux doesn’t provide access control
+        for files mounted via NTFS. For all of these reasons, proponents of
+        AppArmor claim that it is less complex and easier for the average user
+        to learn, and also the fact that it requires fewer modifications to work
+        with existing systems.
+      </p>
+      <br />
+      <p>
+        On the other hand, this LSM ensures fewer operations compared to
+        SELinux, for instance this last one separates containers by default and
+        controles more operations on a system. This level of control is not
+        possible with AppArmor because it lacks
+        <a href="https://en.wikipedia.org/wiki/Multi_categories_security"
+          >Multi-Category Security</a
+        >
+        (MCS). In addition, not having
+        <a href="https://en.wikipedia.org/wiki/Multilevel_security">
+          Multi-Level Security</a
+        >
+        (MLS) means that AppArmor cannot be used in highly secure environments.
+      </p>
+      <br />
+      <ul>
+        <li><b>Smack</b>: simple; label based</li>
+      </ul>
+      <p>
+        The acronym of Simplified Mandatory Access Control Kernel, it is a
+        simple mandatory access control system, it is included in the Linux
+        mainline kernel. SMACK was born due to the complexities of SELinux,
+        according to its designers, it was designed with simplicity as its
+        primary goal, with embedded systems in mind and for securing
+        Internet-connected devices. As a result, it is easier to configure and
+        maintain.
+      </p>
+      <br />
+      <p>
+        Since it’s a MAC system, meaning it is governed by a central policy and
+        not by system users, it works best with file systems that support
+        extended attributes. SMACK uses the same underlying kernel
+        infrastructure as SELinux, but reduces the granularity to make system
+        development, configuration, and administration practical and flexible.
+        Although that makes its tools not as rich as those available for use
+        with SELinux.
+      </p>
+      <br />
+      <p>Real world Scenarios require the use of LSM</p>
+      <br />
+      <p>
+        Due to the protection they give and the different attacks they have
+        helped stop or at least mitigate the potential damage, <b>LSMs</b> have
+        become quite popular in the professional world.
+      </p>
+      <br />
+      <p>This impact can be seen in a variety of fields :</p>
+      <br />
+      <p><b>Network / Web:</b></p>
+      <br />
+      <p>
+        An <b>LSM</b> is most useful with programs that provide an attack
+        surface, which is to say,
+      </p>
+      <br />
+      <p>
+        network-accessible daemons. For example running an apache server which
+        with no doubt one day a vulnerability will get discovered and exploited
+        and here we can see the power of <b>LSM</b>. An apache DoS vulnerability
+        where an attacker can cause httpd to send a signal to an arbitrary
+        process and maybe crash it was successfully mitigated with the help of
+        <b>SELinux</b>. Another scenario where a Linux security module comes in
+        handy is mitigating the damage made by configuration mistakes like in a
+        DNS server where the servers often replicate information between each
+        other and attackers may use zone transfers to update the DNS server with
+        false information. Unrestricted file reading/writing, which can lead to
+        stealing ssh keys and hence server access, is another form of attack
+        that LSM has helped to prevent. If <b>LSM</b> is configured to disallow
+        the "Allow $(service name) service to read and write files in user home
+        directories” policy, the exploit will fail and the policy violation will
+        be logged.
+      </p>
+
+      <p>Privilege escalation:</p>
+
+      <p>
+        Before the appearance of Linux Security modules, if attackers gain
+        access to a server, especially with root privileges, they are free to do
+        whatever they want in the environment. This is a problem that
+        <b>LSMs</b> helped prevent in the first place where many root access
+        vulnerabilities were failing due to the security policy and reduce the
+        damage in the second place, that doesn’t mean getting root access is not
+        dangerous but it’s less devastating. The thing about <b>LSM</b> is that
+        each process is running in its domain, isolated and limited by the
+        permissions given by the sysadmin in the <b>LSM</b> policy rules, so if
+        a process is compromised, it will only be able to do what the policy
+        allows thus if the policy was well written, it will not let the process
+        do actions considered as dangerous or malicious.
+      </p>
+      <br />
+      <p>Android:</p>
+      <br />
+      <p>
+        Android is an excellent example of a real-world scenario in which
+        <b>LSM</b>, specifically SELinux, made a significant difference. Prior
+        to Android 4.3, security in Android was dependent on application
+        sandboxes, with each sandbox specified by a UID that defined its rights.
+        After Android 4.3, SELinux was introduced and applied to further define
+        the limits of each android sandbox, hence defining what each program can
+        do, i.e. any application will not be allowed to conduct an action that
+        requires a system call if it is not listed in the security policy. The
+        implementation of SELinux helped also reduce the attack surface which
+        results in an attacker needing to find more vulnerabilities in a smaller
+        surface.
+      </p>
+      <br />
+      <p>Practical SELinux example</p>
+      <br />
+      <p>
+        In order to get a good grasp of LSMs, or SELinux in particular, the
+        following example will show how effective SELinux can be to marginally
+        reduce the attack surface when running vulnerable software on a server.
+      </p>
+      <br />
+      <p>Scenario</p>
+      <br />
+      <p>
+        Let’s suppose we have a CentOS server hosting a simple but vulnerable
+        PHP script on an Apache HTTP server.
+      </p>
+      <br />
+      <p>This is the code for the mentioned script <b>(`_index.php_`)</b> :</p>
+    </section>
+  </body>
+</html>

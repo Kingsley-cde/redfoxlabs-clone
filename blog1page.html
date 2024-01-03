@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Red Fox Labs</title>
+  </head>
+  <body>
+    <section>
+      <header>
+        <a href="index.html"> <img src="assets/logo.png" alt="logo image" /></a>
+        <nav>
+          <a href="About.html">About the company</a>
+          <a href="services.html">Services</a>
+          <a href="contact.html">Contact</a>
+          <a href="blog.html">Blog</a>
+          <a href="learnmore.html">Learn more</a>
+        </nav>
+      </header>
+
+      <div>
+        <h1>RED FOX LABS BLOG</h1>
+      </div>
+    </section>
+
+    <section>
+      <img src="assets/blog 1.jpeg" alt="image1" />
+      <p>XS-Leaks (Cross-Site Leaks)</p>
+      <p>Linux</p>
+      <p>Cyber Security</p>
+      <p>Linux capabilities</p>
+      <p>April 27, 2022</p>
+      <p>
+        Web browsers provide several features that allow distinct web
+        applications to interact with one another. Such features open the door
+        for multiple vulnerabilities, but browsers have been patched for decades
+        and multiple security measures and protocols have been implemented. And
+        due to increasing security awareness and the use of modern safe
+        frameworks, it's becoming harder to find critical security issues in web
+        applications.
+      </p>
+      <br />
+      <br />
+      <p>
+        In this article, we will discover a technique called XS-Leaks that
+        hackers use to exploit these security measures using legitimate
+        mechanisms to gather sensitive information on users.
+      </p>
+      <br />
+      <br />
+      <br />
+      <p>Same Origin Policy</p>
+      <br />
+      <br />
+      <p>
+        The same-origin policy is an important security feature that limits how
+        a document or script loaded from one origin interacts with a resource
+        from another. Its objective is to keep browser windows (and tabs)
+        separate from one another, so that when you go to “malicious.com” for
+        example, the website won't be able to access your emails from
+        “gmail.com”, which you might have opened in another tab.
+      </p>
+      <br />
+      <br />
+      <p>
+        To consider that two URLs have the <b>same origin</b>, the policy
+        essentially checks that both of them have the same protocol, port, and
+        host.
+      </p>
+      <br />
+      <br />
+      Examples:
+      <br />
+      <br />
+      <p>
+        The following table gives examples of origin comparisons with the URL
+        <a href="https://codelabsacademy.com"> https://codelabsacademy.com/ </a
+        >:
+      </p>
+      <br />
+      <br />
+
+      <ul style="list-style: none">
+        <li><b>URL</b></li>
+        <br />
+        <li>https://codelabsacademy.com/<b>/cybersecurity/</b></li>
+        <li><b>http</b>://codelabsacademy.com/</li>
+        <li>https://codelabsacademy.com:<b>80</b></li>
+        <li>https://<b>malicious.com</b>/courses/cybersecurity/</li>
+      </ul>
+
+      <ul style="list-style: none">
+        <li><b>Result</b></li>
+        <br />
+        <li>Same-origin</li>
+        <li>Different origin</li>
+        <li>Different origin</li>
+        <li>https://codelabsacademy.com:<b>80</b></li>
+      </ul>
+
+      <ul style="list-style: none">
+        <li><b>Reason</b></li>
+        <br />
+        <li>Only endpoint differs</li>
+        <li>Different protocol</li>
+        <li>Different port</li>
+        <li>Different host</li>
+      </ul>
+
+      <p>What does the same-origin policy allow, and what does it not?</p>
+      <br />
+      <p>These are some important things to know about <b>SOP:</b></p>
+      <br />
+      <ul>
+        <li>Reading and writing cross-origin content is not allowed.</li>
+        <li>
+          Any website from any origin can send GET, POST, HEAD, and OPTIONS
+          requests to any other origin. In addition to that, the request will
+          include the user's cookies to that origin.
+        </li>
+        <li>
+          Sending requests is possible, but reading the content of the responses
+          from another origin is not allowed.
+        </li>
+        <li>
+          A website can still extract resources from these HTTP responses, by
+          loading scripts or displaying images.
+        </li>
+      </ul>
+      <p>Side Channel Attacks</p>
+      <p>
+        A side-channel attack is a type of computer security attack that relies
+        on information gathered through measuring or exploiting indirect effects
+        of the system or its hardware rather than flaws in the program or its
+        code directly.
+      </p>
+      <br />
+      <p>
+        Timing information, power consumption, electromagnetic leakage, and even
+        sound can all give additional sources of data that can be used.
+      </p>
+      <br />
+      <p>
+        Side channel attacks have been increasingly common in recent years as
+        measurement equipment has improved and become more precise, as well as
+        the usage of deep learning algorithms in the analysis of leaked data.
+      </p>
+      <br />
+      <p>What are XS-Leaks</p>
+      <br />
+      <p>
+        Cross-Site Leaks (or XS-Leaks) are a type of browser side-channel
+        attacks that abuse and exploit legitimate mechanisms to gather
+        information on visitors to websites that would not normally be
+        available.
+      </p>
+      <br />
+      <p>
+        In brief, a malicious third-party website will send requests or redirect
+        users to the target services, as permitted by SOP, and then measure side
+        channel signals (e.g. response time, static resources caches in browser,
+        HTTP response status code, etc…) to infer and gather information about
+        users based on the analysis of such side channel signals.
+      </p>
+      <br />
+      <p>Types of XS-Leaks</p>
+      <ul>
+        <li>Error based XS-Leaks attacks</li>
+        <br />
+        <p>
+          When sending requests to a server, based on the specified context, it
+          determines whether the request should succeed (e.g.status code : 200)
+          or fail (e.g.status code : 400).
+        </p>
+        <br />
+        <p>
+          Let’s assume that these decisions are based on some sensitive user
+          data. Then an attacker can query resources and determine their
+          availability for the browser user based on the response status code.
+        </p>
+        <br />
+        <p>The following script is used to leak the endpoints:</p>
+        <br />
+        <p>Result:</p>
+        <li>XS-leaks through timing attacks :</li>
+        <p>
+          It’s possible to calculate the time taken for cross domain requests :
+        </p>
+        <br />
+        <p>
+          This will make it possible to compare responses, we can imagine a
+          scenario where a search option is available like a school website
+          where you can search if the student passed the year or not. The
+          student sends the next request :
+        </p>
+        <br />
+        <p>
+          If the student passed the year, then the server will return a JSON
+          object with the student information, else an empty JSON object.
+        </p>
+        <br />
+        <p>
+          In most situations, the last one will take longer, allowing the
+          attacker to ascertain whether each user has passed or no.
+        </p>
+        <li>XS-Leaks through browser cache :</li>
+        <br />
+        <p>
+          Browsers try to cache parts of the page in the user disk to improve
+          the user experience and reduce the time it takes to load pages, this
+          approach greatly increases performance, but it may be utilized in an
+          XS-Leaks attack. If an image, for example, has been cached, the next
+          time the visitor sees the website, the page will load faster than the
+          first time. This capability can be used by the attacker to divulge
+          sensitive information. First load the page and search for a
+          non-existent resource, so the not_found.png image is cached. Next, the
+          attackers will try to brute force what they’re looking for. If the
+          request time was short, it means the search returned false, thus
+          loading the not_found.png. In the other case, if the request takes a
+          long time, that means that the search returned true, thus loading the
+          found.png image. And so on to get the next parts of the target
+          information.
+        </p>
+        <li>XS-Leaks via Frame Counting :</li>
+        <br />
+        <p>
+          As previously stated in “Error Based” techniques, the same method can
+          also be used via frame windows.
+        </p>
+        <br />
+        <p>
+          Let’s suppose a scenario where both the targeted and the usual page
+          return the same HTTP response, that makes the job harder for the
+          attacker.
+        </p>
+        <br />
+        <p>
+          However, if the targeted page has a frame for each component, that is
+          enough to disclose whether a user is related to it or not.
+          Fortunately, the window.length attribute exists to show how many
+          frames are there in the targeted page, thus as the attacker would now
+          be able to know the length of farmable components in the page, and
+          also distinguish between the targeted page and other usual pages by
+          knowing the number of frames that are loaded, without violating the
+          SOP.
+        </p>
+        <br />
+        <p>For example :</p>
+        <br />
+        <ul>
+          <li>
+            An endpoint that displays a frame for each payment you’ve made : by
+            making a webpage that opens the targeted webpage and tracks how many
+            frames it has using the `<b>window.length</b>` attribute, the
+            malicious user will be able to know how many frames the targeted
+            page has, which can disclose private payments made
+          </li>
+          <li>
+            An endpoint on an administration panel that displays a frame for
+            each employee signed into the company : by making a malicious page
+            that opens the vulnerable page that contains a frame HTML tag for
+            each user signing in (using the `<b>window.length</b>` attribute),
+            the unauthorized user (attacker) will be able to knows how many
+            employees work in the company
+          </li>
+        </ul>
+        <br />
+        <p>
+          And as a real world example, “Ron Massas”, a security researcher from
+          Imperva found out that Facebook creates a frame for each page,
+          contact, friend you have based on each search category, as such they
+          were able to know how many friends based on specific country, whether
+          you are friends with someone or not … and so on, you can read more on
+          their blog (<a
+            href="https://www.imperva.com/blog/archive/facebook-privacy-bug/"
+            >https://www.imperva.com/blog/facebook-privacy-bug/</a
+          >)
+        </p>
+      </ul>
+      <br />
+      <p>Security measures</p>
+      <br />
+      <p>
+        Since it’s more likely for an XS-Leak attack to be a browser issue
+        rather than an application’s design issue, many advanced techniques were
+        put in place by browsers to protect against the XS-Leaks attacks, the
+        best of them are :
+      </p>
+      <ul>
+        <li>Implementing mandatory Cross-Origin Opener and Resource policy</li>
+        <li>
+          In order to prevent framing, use Content-Security-Policy and
+          X-Frame-Options HTTP headers
+        </li>
+        <li>
+          Assign the session cookies as Lax and Strict same site attributes,
+          these are commonly the best way to stop cross-site sharing even when
+          they are allowed by the same origin policy, like the “Frame counting”
+          technique
+        </li>
+      </ul>
+      <br />
+      <p>Conclusion</p>
+      <p>
+        Cross-site leaks (XS-Leak) is leans more towards the “browser
+        side-channel techniques” side than the application's design side, so
+        that’s what made it difficult for developers to mitigate the issue then,
+        as it has been proven that it’s possible to perform oracle attacks to
+        get information across different origins based on the timing, errors and
+        the allowed attributes designed in the browsers
+      </p>
+      <br />
+      <p>
+        So for the sake of everyone’s privacy and security, browsers developed
+        and provided many techniques to protect against the XS-Leaks attacks,
+        including but not limited to SameSite cookies, Cross-Origin Opener
+        Policy, Fetch Metadata headers, Cross-Origin Resource Policy, Cross
+        Origin Read Blocking and so on.
+      </p>
+
+      <br />
+      <p>References</p>
+      <br />
+      <ul>
+        <li><a href="https://xsleaks.dev/">https://xsleaks.dev/</a></li>
+        <li>
+          <a href="http://www.ieee-security.org/TC/W2SP/2010/papers/p26.pdf"
+            >http://www.ieee-security.org/TC/W2SP/2010/papers/p26.pdf</a
+          >
+        </li>
+        <li>
+          <a href="https://arturjanc.com/visited-delenda-est.pdf"
+            >https://arturjanc.com/visited-delenda-est.pdf</a
+          >
+        </li>
+        <li>
+          <a href="https://portswigger.net/daily-swig/xs-leak"
+            >https://portswigger.net/daily-swig/xs-leak</a
+          >
+        </li>
+        <li>
+          <a href="https://www.w3.org/TR/post-spectre-webdev/"
+            >https://www.w3.org/TR/post-spectre-webdev/</a
+          >
+        </li>
+        <li>
+          <a href="https://www.imperva.com/blog/facebook-privacy-bug/"
+            >https://www.imperva.com/blog/facebook-privacy-bug/</a
+          >
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <footer>
+        ®Copyright 2021 | All rights reserved | Ground floor, 71 Lower Baggot
+        Street, Dublin 2, D02 P593, Ireland
+      </footer>
+    </section>
+  </body>
+</html>

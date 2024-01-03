@@ -1,0 +1,42 @@
+- Main section:
+    - Nav bar
+        - Logo
+        - List of links
+    - Content
+        - Heading 
+        - Tow buttons
+    
+- About Us                        
+    - Left Area
+        - Subtitle 
+        - Title
+        - Text
+        - Button   
+
+    - Right Area
+        - Image
+
+- Our Services
+    - Left Area 
+        - Image 
+
+    - Right Area
+        - List of services
+            - Icon 
+            - Tittle
+            - Description
+        - Button
+
+- Chat Section
+    - Subtitle
+    - Title
+    - Text 
+    - Form
+        - 3 Text input
+        - Text Area Input
+        - Checkbox
+        - Button
+
+- Footer
+    - Text
+    
