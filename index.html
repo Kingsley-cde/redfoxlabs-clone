@@ -5,27 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Red Fox Labs</title>
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <!-- main section start -->
 
     <section id="main">
-      <header>
-        <a href="index.html"> <img src="assets/logo.png" alt="logo image" /></a>
+      <header id="navbar">
+        <a href="index.html">
+          <img src="assets/logo.png" alt="logo image" class="logo"
+        /></a>
         <nav>
           <a href="About.html">About the company</a>
           <a href="services.html">Services</a>
           <a href="contact.html">Contact</a>
           <a href="blog.html">Blog</a>
-          <a href="learnmore.html">Learn more</a>
+
+          <a href="learnmore.html" id="learn">Learn more</a>
         </nav>
       </header>
 
-      <div>
-        <h1>Cyber resilience, for the constantly changing cyber industry</h1>
-        <div>
-          <a href="#">Get Started</a>
-          <a href="#">Learn more</a>
+      <div class="maincontent">
+        <h1 class="headertxt">
+          Cyber resilience, for the constantly changing cyber industry
+        </h1>
+        <div class="flexcontainer">
+          <a href="contact.html" class="getstarted">Get Started</a>
+          <a href="services.html" class="learnmore">Learn more</a>
         </div>
       </div>
     </section>
@@ -34,22 +45,83 @@
 
     <!-- about us section start -->
     <section id="about">
-      <div>
-        <p>About us</p>
-        <h2>Who we are</h2>
-        <p>
-          Whether you are a small business or a large corporation with crucial
-          infrastructure, Red Fox Labs values your goals by ensuring that your
-          data is always secure and accessible.
-        </p>
-        <p>
-          We provide a comprehensive range of services targeted at developing or
-          upgrading your security by adhering to a strict set of guidelines.
-        </p>
-        <a href="#">More about us</a>
+      <div class="about1">
+        <div class="content1">
+          <div class="center">
+            <p style="color: red; font-weight: bold; font-size: 20px">
+              About us
+            </p>
+            <h2 style="font-size: 60px">Who we are</h2>
+            <p>
+              Whether you are a small business or a large corporation with
+              crucial infrastructure, Red Fox Labs values your goals by ensuring
+              that your data is always secure and accessible.
+            </p>
+            <br />
+
+            <p>
+              We provide a comprehensive range of services targeted at
+              developing or upgrading your security by adhering to a strict set
+              of guidelines.
+            </p>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <div class="moreabout">
+              <a href="About.html">More about us</a>
+            </div>
+          </div>
+        </div>
+        <div class="content2">
+          <img src="assets/Lock.png" alt="lock" />
+        </div>
       </div>
-      <div>
-        <img src="assets/Lock.png" alt="lock" />
+      <div class="about2">
+        <div class="content3">
+          <img src="assets/LockB.png" alt="lockb" />
+        </div>
+        <div class="content4">
+          <div class="center2">
+            <h4>Penetration Testing</h4>
+            <br />
+            <p>
+              We provide penetration testing services to illustrate how an
+              attacker might get unauthorized access to your environment.
+            </p>
+            <br />
+            <h4>Audit & Assessment</h4>
+            <br />
+            <p>
+              Our team offers a wide range of security auditing services to help
+              you find faults and security gaps in your system.
+            </p>
+            <br />
+            <h4>Digital forensics & Incident response</h4>
+            <br />
+            <p>
+              Respond to any cyber-attack and take all the necessary measures to
+              identify, contain, patch and recover.
+            </p>
+            <br />
+            <h4>Cybersecurity training</h4>
+            <br />
+            <p>
+              We also provide online training for general employees, developers,
+              and even security specialists who want to better their abilities
+              in cybersecurity areas
+            </p>
+            <br />
+            <br />
+            <br />
+            <a
+              href="services.html"
+              style="color: red; font-weight: bold; font-size: 20px"
+              >Discover our services</a
+            >
+          </div>
+        </div>
       </div>
     </section>
 
@@ -57,48 +129,72 @@
 
     <!-- contact section start -->
 
-    <section>
-      <p>Lets have a chat</p>
-      <h2>Talk to an expert</h2>
+    <section id="contact">
+      <p style="color: red; font-weight: bold; font-size: 20px">
+        Lets have a chat
+      </p>
+      <h2 style="font-size: 60px">Talk to an expert</h2>
       <p>
         Our specialists are ready to tailor our security service solutions to
         fit the needs of your organization.
       </p>
-      <form>
-        <div>
-          <input type="text" class="form-control" placeholder="Name*" />
-          <input type="text" class="form-control" placeholder="City*" />
+      <form class="flexcontainer2">
+        <div class="gridcontainer">
+          <input type="text" placeholder="Name*" class="input" />
+          <input type="text" placeholder="City*" class="input" />
+
+          <input type="email" placeholder="Email*" class="input" />
         </div>
-        <div>
-          <input type="email" class="form-control" value="Email*" />
-        </div>
-        <div>
-          <textarea
-            class="form-control"
-            id="exampleFormControlTextarea1"
-            rows="8"
-            placeholder="Message"
-          ></textarea>
-        </div>
-        <div>
+
+        <textarea
+          id="exampleFormControlTextarea1"
+          rows="8"
+          placeholder="Message"
+          style="width: 100%"
+          class="input"
+        ></textarea>
+
+        <div class="checkboxdiv">
           <input type="checkbox" id="contactform" name="contactform" />
           <label for="contactform">
-            You agree to the <a href="#">Terms of Use</a> and
-            <a href="#">Privacy Policy</a></label
+            You agree to the
+            <a href="https://redfoxlabs.dev/terms-of-use" style="color: red"
+              >Terms of Use</a
+            >
+            and
+            <a href="https://redfoxlabs.dev/privacy-policy" style="color: red"
+              >Privacy Policy</a
+            ></label
           >
         </div>
-        <input type="submit" value="Submit" />
+        <div class="submitbtn">
+          <input type="submit" value="Submit" />
+        </div>
       </form>
     </section>
 
     <!-- contact section end -->
     <!-- footer  start -->
-    <footer>
-      <p>
+    <footer class="footer">
+      <p class="footertxt">
         ®Copyright 2021 | All rights reserved | Ground floor, 71 Lower Baggot
         Street, Dublin 2, D02 P593, Ireland
       </p>
     </footer>
     <!-- footer end -->
+
+    <script>
+      window.addEventListener("scroll", function () {
+        var navbar = document.getElementById("navbar");
+        var scrolled = window.scrollY;
+
+        // Change the background color when scrolling starts
+        if (scrolled > 50) {
+          navbar.classList.add("navbar-scrolled");
+        } else {
+          navbar.classList.remove("navbar-scrolled");
+        }
+      });
+    </script>
   </body>
 </html>
