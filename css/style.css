@@ -14,14 +14,16 @@ a {
   height: 100vh;
   background-size: cover;
   position: relative;
+  padding: 0.5rem 2rem;
 }
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 2rem;
+
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
 }
 .logo {
@@ -36,6 +38,7 @@ nav {
   align-items: center;
   justify-content: center;
   text-align: center;
+  padding: 0 2rem;
 }
 #learn {
   background-color: red;
