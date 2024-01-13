@@ -16,20 +16,33 @@
     <!-- main section start -->
 
     <section id="main">
-      <header id="navbar">
-        <a href="index.html">
-          <img src="assets/logo.png" alt="logo image" class="logo"
-        /></a>
-        <nav>
+      <div class="topnav">
+        <header id="navbar">
+          <a href="index.html">
+            <img src="assets/logo.png" alt="logo image" class="logo"
+          /></a>
+          <button onclick="toggleMenu()">
+            <img src="assets/menu.png" alt="menuimage" class="menuicon" />
+          </button>
+          <nav>
+            <a href="About.html">About the company</a>
+            <a href="services.html">Services</a>
+            <a href="contact.html">Contact</a>
+            <a href="blog.html">Blog</a>
+
+            <a href="learnmore.html" id="learn">Learn more</a>
+          </nav>
+        </header>
+
+        <div class="mobilemenu hiddenmenu" id="mobile">
           <a href="About.html">About the company</a>
           <a href="services.html">Services</a>
           <a href="contact.html">Contact</a>
           <a href="blog.html">Blog</a>
 
           <a href="learnmore.html" id="learn">Learn more</a>
-        </nav>
-      </header>
-
+        </div>
+      </div>
       <div class="maincontent">
         <h1 class="headertxt">
           Cyber resilience, for the constantly changing cyber industry
@@ -195,6 +208,18 @@
           navbar.classList.remove("navbar-scrolled");
         }
       });
+
+      function toggleMenu() {
+        const menu = document.getElementById("mobile");
+        const icon = document.getElementsByClassName("menuicon")[0];
+        if (menu.classList.contains("hiddenmenu")) {
+          menu.classList.remove("hiddenmenu");
+          icon.src = "assets/close.png";
+        } else {
+          menu.classList.add("hiddenmenu");
+          icon.src = "assets/menu.png";
+        }
+      }
     </script>
   </body>
 </html>
